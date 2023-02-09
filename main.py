@@ -2,10 +2,9 @@ import requests
 import json
 from config import *
 
-DEBUG = False
-
 pushbullet_endpoint = "https://api.pushbullet.com/v2/pushes"
 cdc_endpoint = "https://data.cdc.gov/resource/3nnm-4jni.json"
+
 
 def main():
     cdc_headers = {"X-App-Token": cdc_access_token}
@@ -21,10 +20,11 @@ def main():
     print(output)
 
     if level != "Low" or DEBUG:
-        pushbullet_format = {"body": output,
-                             "title": "Daily Covid Update",
-                             "type": "note"
-                             }
+        pushbullet_format = {
+            "body": output,
+            "title": "Daily Covid Update",
+            "type": "note"
+        }
         res = requests.post(pushbullet_endpoint, headers=pushbullet_header, data=json.dumps(pushbullet_format))
 
 
